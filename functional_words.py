@@ -37,17 +37,20 @@ diffdict = {}
 # the second key is the third word, etc
 # the value for each key is the key word minus the dict word
 
-
 for sentence in indices:
 	words = sentence.keys()
-	remaining = 
 	wordict = {}
-	for index, word1 in words:
+	for index, word1 in enumerate(words):
 		for word2 in words[index+1:]:
-			wordict[word2] = word2 - word1
-		
-		#diffdict.append(wordict) # append to specific key?
+			wordict[word2] = sentence[word2] - sentence[word1]
+			if diffdict.has_key(word1):
+				if diffdict[word1].has_key(word2):
+					diffdict[word1][word2] = float(diffdict[word1][word2] + wordict[word2]) / 2
+				else:
+					diffdict[word1][word2] = wordict[word2]
+			else:
+				diffdict[word1] = wordict
 
-print worddict		
+print diffdict
 
 # print prologue
