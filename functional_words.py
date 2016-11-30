@@ -22,11 +22,22 @@ for sentence in prologue:
 	sdict = {}
 	for index, word in enumerate(sentence):
 		if word in fwords:
+			#to do: some values in sdict are Nones when they should be lists
 			if sdict.has_key(word):
-				sdict[word] = float(sdict[word] + index) / 2
+				sdict[word] = [sdict[word]].append(index)
+				#sdict[word] = float(sdict[word] + index) / 2
 			else:
 				sdict[word] = index
+				
+	for word in sdict:			
+		if type(sdict[word]) == list:
+			total = 0
+			total = sum(sdict[word])
+			average = float(total) / len(sdict[word])
+		
 	indices.append(sdict)
+
+print indices
 
 diffdict = {}
 
@@ -40,24 +51,22 @@ diffdict = {}
 
 for sentence in indices:
 	words = sentence.keys()
-	wordict = {}
 	for index, word1 in enumerate(words):
+		wordict = {}
 		total = 0
 		count = 0
 		for word2 in words[index+1:]:
 			wordict[word2] = abs(sentence[word2] - sentence[word1])
 			total = total + wordict[word2]
 			count = count + 1
-			# TO DO: each dictionary has the same numbers for different word distances
 			if diffdict.has_key(word1):
 				if diffdict[word1].has_key(word2):
-					#diffdict[word1][word2] = float(diffdict[word1][word2] + wordict[word2]) / 2
 					diffdict[word1][word2] = float(total) / count
 				else:
 					diffdict[word1][word2] = wordict[word2]
 			else:
 				diffdict[word1] = wordict
 
-pprint(diffdict)
+#pprint(diffdict)
 
 # print prologue
