@@ -10,8 +10,6 @@ fwords = urllib2.urlopen("https://fling.seas.upenn.edu/~maeisen/wiki/functionwor
 
 # shakespeare = urllib2.urlopen("http://cs.stanford.edu/people/karpathy/char-rnn/shakespeare_input.txt").read().lower()
 
-# test.txt
-
 data = open("test2.txt").read().lower()
 prologue = re.findall(r"[^.;:!?]+", data)
 prologue = [re.findall(r"[\w']+", item) for item in prologue]
@@ -22,22 +20,22 @@ for sentence in prologue:
 	sdict = {}
 	for index, word in enumerate(sentence):
 		if word in fwords:
-			#to do: some values in sdict are Nones when they should be lists
 			if sdict.has_key(word):
-				sdict[word] = [sdict[word]].append(index)
+				wordlist = sdict[word]
+				wordlist.append(index)
+				sdict[word] = wordlist
 				#sdict[word] = float(sdict[word] + index) / 2
 			else:
-				sdict[word] = index
+				sdict[word] = [index]
 				
 	for word in sdict:			
-		if type(sdict[word]) == list:
-			total = 0
-			total = sum(sdict[word])
-			average = float(total) / len(sdict[word])
+		total = sum(sdict[word])
+		average = float(total) / len(sdict[word])
+		sdict[word] = average
 		
 	indices.append(sdict)
 
-print indices
+#print indices
 
 diffdict = {}
 
@@ -67,6 +65,6 @@ for sentence in indices:
 			else:
 				diffdict[word1] = wordict
 
-#pprint(diffdict)
+pprint(diffdict)
 
 # print prologue
