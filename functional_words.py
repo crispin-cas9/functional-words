@@ -11,7 +11,7 @@ fwords = urllib2.urlopen("https://fling.seas.upenn.edu/~maeisen/wiki/functionwor
 
 # shakespeare = urllib2.urlopen("http://cs.stanford.edu/people/karpathy/char-rnn/shakespeare_input.txt").read().lower()
 
-rawdata = open("test2.txt").read().lower()
+rawdata = open("tempest.txt").read().lower()
 data = re.findall(r"[^.;:!?]+", rawdata)
 data = [re.findall(r"[\w']+", item) for item in data]
 
@@ -25,7 +25,6 @@ for sentence in data:
 				wordlist = sdict[word]
 				wordlist.append(index)
 				sdict[word] = wordlist
-				#sdict[word] = float(sdict[word] + index) / 2
 			else:
 				sdict[word] = [index]
 		
@@ -43,27 +42,39 @@ diffdict = {}
 # the second key is the third word, etc
 # the value for each key is the key word minus the dict word
 
+# this function returns the difference between two words:
+
+def getdistance(list1, list2):
+	pairs = itertools.product(list1, list2)
+	distances = [abs(t[0] - t[1]) for t in pairs]
+	return distances
+
+def average(list):
+	total = sum(list)
+	average = float(total) / len(list)
+	return average
+
 for sentence in indices:
 	words = sentence.keys()
 	for index, word1 in enumerate(words):
 		wordict = {}
 		for word2 in words[index+1:]:
-			for nlist1, nlist2 in word2[index+1:]:
-				pairs = itertools.product(nlist1, nlist2)
-				for n1, n2 in pairs:
-					wordict[word2] = [abs(n1 - n2)]
-			
-			if diffdict.has_key(word1):
-				if diffdict[word1].has_key(word2):
-					total = sum(diffdict[word1][word2])
-					average = float(total) / len(diffdict[word1][word2])
-					diffdict[word1][word2] = average
-				else:
-					diffdict[word1][word2] = wordict[word2]
-			else:
-				diffdict[word1] = wordict
+			distances = getdistance(sentence[word1], sentence[word2])
+			wordict[word2] = average(distances)
+			diffdict[word1] = wordict
 
 pprint(diffdict)
+
+
+# 			if diffdict.has_key(word1):
+# 				if diffdict[word1].has_key(word2):
+# 					total = sum(diffdict[word1][word2])
+# 					average = float(total) / len(diffdict[word1][word2])
+# 					diffdict[word1][word2] = average
+# 				else:
+# 					diffdict[word1][word2] = wordict[word2]
+# 			else:
+# 				diffdict[word1] = wordict
 
 # for sentence in indices:
 # 	words = sentence.keys()
