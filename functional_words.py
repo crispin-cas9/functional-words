@@ -46,6 +46,7 @@ def finddiff(text):
 			wordict = {}
 			for word2 in words[index+1:]:
 				distances = getdistance(sentence[word1], sentence[word2])
+				# to do: take distances from ALL sentences in the play
 				wordict[word2] = average(distances)
 				diffdict[word1] = wordict
 	
