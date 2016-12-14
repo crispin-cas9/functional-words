@@ -43,18 +43,24 @@ def finddiff(text):
 	for sentence in indices:
 		words = sentence.keys()
 		for index, word1 in enumerate(words):
-			wordict = {}
 			for word2 in words[index+1:]:
-				distances = getdistance(sentence[word1], sentence[word2])
-				# to do: take distances from ALL sentences in the play
-				wordict[word2] = average(distances)
-				diffdict[word1] = wordict
+				sdistances = getdistance(sentence[word1], sentence[word2])
+				
+				if diffdict.has_key(word1):
+					if diffdict[word1].has_key(word2):
+						diffdict[word1][word2].extend(sdistances)
+					else:
+						diffdict[word1][word2] = sdistances
+				else:
+					diffdict[word1] = {word2: sdistances}
+	
+	for word1 in diffdict:
+		for word2 in diffdict[word1]:
+			diffdict[word1][word2] = average(diffdict[word1][word2])
 	
 	return diffdict
-	
-	pprint(diffdict)
 	
 test = finddiff("test2.txt")
 tempest = finddiff("tempest.txt")
 
-print tempest
+pprint(tempest)
