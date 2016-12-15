@@ -62,5 +62,6 @@ def finddiff(text):
 	
 test = finddiff("test2.txt")
 tempest = finddiff("tempest.txt")
+much_ado = finddiff("much_ado.txt")
 
-pprint(tempest)
+#pprint(tempest)
