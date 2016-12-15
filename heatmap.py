@@ -1,11 +1,18 @@
-import functional_words
+import functional_words as fw
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 
-tempest = functional_words.tempest
-much_ado = functional_words.much_ado
-macbeth = functional_words.macbeth
+tempest = fw.tempest
+much_ado = fw.much_ado
+macbeth = fw.macbeth
+henryvi = fw.henryvi
+faustus = fw.faustus
+
+temp_macbeth = fw.temp_macbeth
+temp_much_ado = fw.temp_much_ado
+temp_henryvi = fw.temp_henryvi
+temp_faustus = fw.temp_faustus
 
 def drawmap(play):
 
@@ -19,7 +26,8 @@ def drawmap(play):
 	f, ax = plt.subplots(figsize=(12, 9))
 
 	# Draw the heatmap using seaborn
-	heatmap = sns.heatmap(df, vmax=df.max().max(), square=True, yticklabels=index, cmap="RdBu_r")
+	heatmap = sns.heatmap(df, vmax=25, square=True, yticklabels=index)
+#	heatmap = sns.heatmap(df, vmax=df.max().max(), square=True, yticklabels=index, cmap="RdBu_r")
 
 	# f.tight_layout()
 	plt.xticks(rotation=-90)
@@ -30,4 +38,5 @@ def drawmap(play):
 
 	sns.plt.show()
 
-drawmap(macbeth)
+#drawmap(faustus)
+drawmap(tempest)
