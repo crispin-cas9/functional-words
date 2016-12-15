@@ -5,6 +5,7 @@ import pandas as pd
 
 tempest = functional_words.tempest
 much_ado = functional_words.much_ado
+macbeth = functional_words.macbeth
 
 def drawmap(play):
 
@@ -29,4 +30,4 @@ def drawmap(play):
 
 	sns.plt.show()
 
-drawmap(much_ado)
+drawmap(macbeth)

@@ -60,8 +60,9 @@ def finddiff(text):
 	
 	return diffdict
 	
-test = finddiff("test2.txt")
-tempest = finddiff("tempest.txt")
-much_ado = finddiff("much_ado.txt")
+test = finddiff("data/test2.txt")
+tempest = finddiff("data/tempest.txt")
+much_ado = finddiff("data/much_ado.txt")
+macbeth = finddiff("data/macbeth.txt")
 
 #pprint(tempest)
